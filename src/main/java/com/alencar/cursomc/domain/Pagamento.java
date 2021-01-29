@@ -11,7 +11,7 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
 import com.alencar.cursomc.domain.enums.EstadoPagamento;
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity //identificaçao de nome de tabela no banco de dados uma "ENTIDADE"
 @Inheritance(strategy=InheritanceType.JOINED)//denominação de classe mãe "Herança"
@@ -22,7 +22,7 @@ public abstract class Pagamento implements Serializable{ //abstract ela nao pode
 	private Integer id;
 	private Integer estado;
 	
-	@JsonBackReference 
+	@JsonIgnore
 	@OneToOne // denominação de tabela um para um 
 	@JoinColumn(name="pedido_id") //mapeamento de qual variavel é usada para fazer a ligação das tabelas no banco de dados
 	@MapsId
