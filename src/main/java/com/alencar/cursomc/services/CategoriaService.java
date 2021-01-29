@@ -16,7 +16,7 @@ public class CategoriaService {
 	private CategoriaRepository repo;
 	
 	//metodo de pesquisa por codigo no banco de dados
-	public Categoria buscar(Integer id) {
+	public Categoria find(Integer id) {
 		Optional<Categoria> obj = repo.findById(id);
 		return obj.orElseThrow(() -> new ObjectNotFoundException("Objeto não encontrado ! Id: " + id + ", Tipo: " + Categoria.class.getName())); 
 	}
@@ -24,6 +24,12 @@ public class CategoriaService {
 	//metodo de inserir no banco de dados
 	public Categoria insert(Categoria obj) {
 		obj.setId(null);
+		return repo.save(obj);
+	}
+	
+	//metodo de atualizar 
+	public Categoria update(Categoria obj) {
+		find(obj.getId());//metodo para verificar se ja existe uma categoria para ser alterada
 		return repo.save(obj);
 	}
 
