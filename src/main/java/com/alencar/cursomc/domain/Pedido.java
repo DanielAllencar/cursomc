@@ -15,18 +15,25 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 public class Pedido implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
-	@Id
+	@Id //indica um campo tipo de identificação
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Integer id;
+	private Integer id; //atributos da classe
+	
+	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
 	private Date instante;
 	
+	@JsonManagedReference //permite o jsom serealizar deste lado
 	@OneToOne(cascade=CascadeType.ALL, mappedBy="pedido")
 	private Pagamento pagamento;
 	
+	@JsonManagedReference
 	@ManyToOne
 	@JoinColumn(name="cliente_id")
 	private Cliente cliente;
@@ -38,10 +45,12 @@ public class Pedido implements Serializable{
 	@OneToMany(mappedBy = "id.pedido")
 	private Set<ItemPedido> itens = new HashSet<>();
 		
+	//construtor vazio
 	public Pedido() {
 		
 	}
 
+	//construtor passando valores
 	public Pedido(Integer id, Date instante, Cliente cliente, Endereco enderecoDeEntrega) {
 		super();
 		this.id = id;
@@ -50,6 +59,7 @@ public class Pedido implements Serializable{
 		this.enderecoDeEntrega = enderecoDeEntrega;
 	}
 
+	//get e sets 
 	public Integer getId() {
 		return id;
 	}
@@ -98,6 +108,7 @@ public class Pedido implements Serializable{
 		this.itens = itens;
 	}
 
+	//equal e hash code - serve para definir metodos de comparação de tabelas
 	@Override
 	public int hashCode() {
 		final int prime = 31;

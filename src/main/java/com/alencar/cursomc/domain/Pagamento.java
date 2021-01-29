@@ -11,25 +11,29 @@ import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 
 import com.alencar.cursomc.domain.enums.EstadoPagamento;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 
-@Entity
-@Inheritance(strategy=InheritanceType.JOINED)
-public abstract class Pagamento implements Serializable{
+@Entity //identificaçao de nome de tabela no banco de dados uma "ENTIDADE"
+@Inheritance(strategy=InheritanceType.JOINED)//denominação de classe mãe "Herança"
+public abstract class Pagamento implements Serializable{ //abstract ela nao pode ser usada para cadastro usa-se as tabelas filhas que irão conter todos os dados herdados
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	private Integer id;
 	private Integer estado;
 	
-	@OneToOne
-	@JoinColumn(name="pedido_id")
+	@JsonBackReference 
+	@OneToOne // denominação de tabela um para um 
+	@JoinColumn(name="pedido_id") //mapeamento de qual variavel é usada para fazer a ligação das tabelas no banco de dados
 	@MapsId
 	private Pedido pedido;
 	
+	//cosntrutor
 	public Pagamento() {
 		
 	}
 
+	//construtor com parametros
 	public Pagamento(Integer id, EstadoPagamento estado, Pedido pedido) {
 		super();
 		this.id = id;
@@ -37,6 +41,7 @@ public abstract class Pagamento implements Serializable{
 		this.pedido = pedido;
 	}
 
+	//get e set
 	public Integer getId() {
 		return id;
 	}
@@ -61,6 +66,7 @@ public abstract class Pagamento implements Serializable{
 		this.pedido = pedido;
 	}
 
+	//equal e hash code 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
