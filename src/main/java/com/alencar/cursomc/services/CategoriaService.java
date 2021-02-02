@@ -1,14 +1,16 @@
 package com.alencar.cursomc.services;
 
+import java.util.List;
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+
 import com.alencar.cursomc.domain.Categoria;
 import com.alencar.cursomc.repositories.CategoriaRepository;
 import com.alencar.cursomc.services.exceptions.DataIntegrityException;
 import com.alencar.cursomc.services.exceptions.ObjectNotFoundException;
-
-import java.util.Optional;
 
 @Service
 public class CategoriaService {
@@ -43,8 +45,13 @@ public class CategoriaService {
 		}
 		catch (DataIntegrityViolationException e) {
 			throw new DataIntegrityException("Não é possivel excluir uma Categoria que possui Produtos!");
-		}
-				
+		}			
 	}
+	
+	//metodo que lista todas as categorias
+	public List<Categoria> findAll(){
+		return repo.findAll();
+	}
+	
 
 }
