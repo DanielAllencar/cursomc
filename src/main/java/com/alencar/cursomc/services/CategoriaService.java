@@ -1,9 +1,11 @@
 package com.alencar.cursomc.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import com.alencar.cursomc.domain.Categoria;
 import com.alencar.cursomc.repositories.CategoriaRepository;
+import com.alencar.cursomc.services.exceptions.DataIntegrityException;
 import com.alencar.cursomc.services.exceptions.ObjectNotFoundException;
 
 import java.util.Optional;
@@ -31,6 +33,18 @@ public class CategoriaService {
 	public Categoria update(Categoria obj) {
 		find(obj.getId());//metodo para verificar se ja existe uma categoria para ser alterada
 		return repo.save(obj);
+	}
+	
+	//metodo de delete
+	public void delete(Integer id) {
+		find(id);
+		try {
+			repo.deleteById(id);
+		}
+		catch (DataIntegrityViolationException e) {
+			throw new DataIntegrityException("Não é possivel excluir uma Categoria que possui Produtos!");
+		}
+				
 	}
 
 }
