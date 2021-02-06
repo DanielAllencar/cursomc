@@ -30,7 +30,7 @@ public class ClienteService {
 	
 	//metodo de atualizar 
 	public Cliente update(Cliente obj) {
-		Cliente newObj = find(obj.getId());//metodo para verificar se ja existe uma categoria para ser alterada
+		Cliente newObj = find(obj.getId());
 		updateData(newObj, obj);//metodo auxiliar que busca no banco e adiciona as atualizações
 		return repo.save(newObj);
 	}

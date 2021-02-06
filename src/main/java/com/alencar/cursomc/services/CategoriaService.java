@@ -37,8 +37,9 @@ public class CategoriaService {
 	
 	//metodo de atualizar 
 	public Categoria update(Categoria obj) {
-		find(obj.getId());//metodo para verificar se ja existe uma categoria para ser alterada
-		return repo.save(obj);
+		Categoria newObj = find(obj.getId());
+		updateData(newObj, obj);//metodo auxiliar que busca no banco e adiciona as atualizações
+		return repo.save(newObj);
 	}
 	
 	//metodo de delete
@@ -68,6 +69,10 @@ public class CategoriaService {
 		return new Categoria(objDto.getId(), objDto.getNome());
 	}
 	
+	//metodo auxiliar que busca o objeto no banco de dados e altera os dados novos mais mantendo os outros dados intactos
+	private void updateData(Categoria newObj, Categoria obj) {
+		newObj.setNome(obj.getNome());
+	}
 	
 	
 
